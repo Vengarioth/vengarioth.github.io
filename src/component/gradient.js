@@ -18,7 +18,6 @@ const create = () => class Gradient extends Component {
 
     this._lastWidth = parentWidth;
 
-    console.log(parentWidth);
     this.refs.svg.setAttribute('width', parentWidth);
 
     var n = 240, m = 125, values = new Array(n * m);

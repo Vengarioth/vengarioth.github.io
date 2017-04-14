@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import createMarkdown from './component/markdown';
 import createRust from './component/rust';
 import createGradient from './component/gradient';
+import Perceptron from './perceptron/perceptron';
 
 import createHelloWorld from './article/hello-world/hello-world';
 
@@ -20,6 +21,8 @@ import createHelloWorld from './article/hello-world/hello-world';
 
   const markdown = createMarkdown(ReactMarkdown);
   const rust = createRust(SyntaxHighlighter);
+
+  new Perceptron();
 
   const dependencies = {
     markdown,
