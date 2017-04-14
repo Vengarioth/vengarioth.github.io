@@ -6,6 +6,9 @@ import createMainLayout from './component/main-layout';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import ReactMarkdown from 'react-markdown';
 
+import createMarkdown from './component/markdown';
+import createRust from './component/rust';
+
 import createHelloWorld from './article/hello-world/hello-world';
 
 ((global) => {
@@ -13,9 +16,12 @@ import createHelloWorld from './article/hello-world/hello-world';
   const TopNav = createTopNav();
   const MainLayout = createMainLayout(TopNav, Article);
 
+  const markdown = createMarkdown(ReactMarkdown);
+  const rust = createRust(SyntaxHighlighter);
+
   const dependencies = {
-    SyntaxHighlighter,
-    ReactMarkdown
+    markdown,
+    rust
   };
 
   const articles = [

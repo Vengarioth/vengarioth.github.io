@@ -6,9 +6,9 @@
   "main": "index.js",
   "scripts": {
     "uglify": "uglifyjs --compress --mangle --screw-ie8 -o dist/vengarioth-github-io.js -- dist/vengarioth-github-io.max.js",
-    "watch": "watchify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ]",
+    "watch": "watchify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] -t [ stringify  --extensions [.md .rs] ]",
     "start": "http-server .",
-    "bundle": "rimraf dist && mkdirp dist && NODE_ENV=production browserify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] && npm run uglify",
+    "bundle": "rimraf dist && mkdirp dist && NODE_ENV=production browserify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] -t [ stringify  --extensions [.md .rs] ] && npm run uglify",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "babel": {
@@ -60,6 +60,7 @@
     "regenerator-runtime": "^0.9.5",
     "rimraf": "^2.6.1",
     "sinon": "^1.17.6",
+    "stringify": "^5.1.0",
     "uglify-js": "^2.7.3",
     "watchify": "^3.7.0"
   }
