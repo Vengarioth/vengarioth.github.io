@@ -76691,7 +76691,7 @@ var Perceptron = function () {
 
     _classCallCheck(this, Perceptron);
 
-    this._layer = [new Layer(inputs, hiddenUnits), new Layer(hiddenUnits, outputs)];
+    this._layer = [new Layer(inputs, hiddenUnits), new Layer(hiddenUnits, hiddenUnits), new Layer(hiddenUnits, hiddenUnits), new Layer(hiddenUnits, outputs)];
 
     this.train(_numjs2.default.array([[0, 0, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1]]), _numjs2.default.array([[0], [1], [1], [0]]));
   }
@@ -76701,31 +76701,30 @@ var Perceptron = function () {
     value: function train(x, y) {
       var _this = this;
 
-      var i = 0;
+      var e = 0;
       var epoch = function epoch() {
-        var layer_0 = x;
-        //const layer_1 = nj.sigmoid(nj.dot(layer_0, this._layer[0].W));
-        //const layer_2 = nj.sigmoid(nj.dot(layer_1, this._layer[1].W));
-        var layer_1 = _this._layer[0].forward(layer_0);
-        var layer_2 = _this._layer[1].forward(layer_1);
 
-        var layer_2_error = layer_2.subtract(y);
-        var layer_2_delta = _this._layer[1].backward(layer_2_error);
+        var activations = [x];
+        for (var i = 0; i < _this._layer.length; i++) {
+          activations[i + 1] = _this._layer[i].forward(activations[i]);
+        }
 
-        var layer_1_error = layer_2_delta.dot(_this._layer[1].W.T);
-        var layer_1_delta = _this._layer[0].backward(layer_1_error);
+        var delta = void 0;
+        var error = activations[activations.length - 1].subtract(y);
+        if (e % 100 < 1) {
+          console.log('loss: ' + _numjs2.default.abs(error).mean());
+        }
+        for (var _i = activations.length - 1; _i > 0; _i--) {
+          delta = _this._layer[_i - 1].backward(error);
+          error = delta.dot(_this._layer[_i - 1].W.T);
 
-        _this._layer[1].W = _this._layer[1].W.subtract(layer_1.T.dot(layer_2_delta).multiply(1));
-        _this._layer[0].W = _this._layer[0].W.subtract(layer_0.T.dot(layer_1_delta).multiply(1));
-
-        if (i % 100 < 1) {
-          console.log('loss: ' + _numjs2.default.abs(layer_2_error).mean());
+          _this._layer[_i - 1].W = _this._layer[_i - 1].W.subtract(activations[_i - 1].T.dot(delta).multiply(1));
         }
 
         window.requestAnimationFrame(function () {
           return epoch();
         });
-        i++;
+        e++;
       };
 
       epoch();

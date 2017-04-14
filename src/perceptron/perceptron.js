@@ -27,6 +27,8 @@ class Perceptron {
 
     this._layer = [
       new Layer(inputs, hiddenUnits),
+      new Layer(hiddenUnits, hiddenUnits),
+      new Layer(hiddenUnits, hiddenUnits),
       new Layer(hiddenUnits, outputs)
     ];
 
@@ -36,29 +38,28 @@ class Perceptron {
   }
 
   train(x, y) {
-    let i = 0;
+    let e = 0;
     const epoch = () => {
-      const layer_0 = x;
-      //const layer_1 = nj.sigmoid(nj.dot(layer_0, this._layer[0].W));
-      //const layer_2 = nj.sigmoid(nj.dot(layer_1, this._layer[1].W));
-      const layer_1 = this._layer[0].forward(layer_0);
-      const layer_2 = this._layer[1].forward(layer_1);
 
-      const layer_2_error = layer_2.subtract(y);
-      const layer_2_delta = this._layer[1].backward(layer_2_error);
+      const activations = [x];
+      for(let i = 0; i < this._layer.length; i++) {
+        activations[i + 1] = this._layer[i].forward(activations[i]);
+      }
 
-      const layer_1_error = layer_2_delta.dot(this._layer[1].W.T);
-      const layer_1_delta = this._layer[0].backward(layer_1_error);
+      let delta;
+      let error = activations[activations.length - 1].subtract(y);
+      if(e % 100 < 1) {
+        console.log('loss: ' + nj.abs(error).mean());
+      }
+      for(let i = activations.length - 1; i > 0; i--) {
+        delta = this._layer[i - 1].backward(error);
+        error = delta.dot(this._layer[i - 1].W.T);
 
-      this._layer[1].W = this._layer[1].W.subtract(layer_1.T.dot(layer_2_delta).multiply(1));
-      this._layer[0].W = this._layer[0].W.subtract(layer_0.T.dot(layer_1_delta).multiply(1));
-
-      if(i % 100 < 1) {
-        console.log('loss: ' + nj.abs(layer_2_error).mean());
+        this._layer[i - 1].W = this._layer[i - 1].W.subtract(activations[i - 1].T.dot(delta).multiply(1));
       }
 
       window.requestAnimationFrame(() => epoch());
-      i++;
+      e++;
     };
 
     epoch();
