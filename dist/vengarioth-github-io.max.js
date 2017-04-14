@@ -51839,7 +51839,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function create(_ref) {
   var markdown = _ref.markdown,
-      rust = _ref.rust;
+      rust = _ref.rust,
+      Gradient = _ref.Gradient;
 
   var getId = function getId() {
     return 'hello-world';
@@ -51856,7 +51857,8 @@ function create(_ref) {
       'div',
       null,
       markdown(_test2.default),
-      rust(_source2.default)
+      rust(_source2.default),
+      _react2.default.createElement(Gradient, null)
     );
   };
 
@@ -51954,7 +51956,114 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/font":504,"react":444,"styled-components":451}],498:[function(require,module,exports){
+},{"../style/font":505,"react":444,"styled-components":451}],498:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var create = function create() {
+  return function (_Component) {
+    _inherits(Gradient, _Component);
+
+    function Gradient() {
+      _classCallCheck(this, Gradient);
+
+      return _possibleConstructorReturn(this, (Gradient.__proto__ || Object.getPrototypeOf(Gradient)).apply(this, arguments));
+    }
+
+    _createClass(Gradient, [{
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        this._lastWidth = 0;
+        window.addEventListener('resize', this.updateDimensions.bind(this));
+        var parentWidth = this.refs.svg.parentNode.clientWidth;
+        this.refs.svg.setAttribute('width', parentWidth);
+        this.updateDimensions();
+      }
+    }, {
+      key: 'updateDimensions',
+      value: function updateDimensions() {
+        var parentWidth = this.refs.svg.parentNode.clientWidth;
+        if (parentWidth === this._lastWidth) {
+          return;
+        }
+
+        this._lastWidth = parentWidth;
+
+        console.log(parentWidth);
+        this.refs.svg.setAttribute('width', parentWidth);
+
+        var n = 240,
+            m = 125,
+            values = new Array(n * m);
+        for (var j = 0.5, k = 0; j < m; ++j) {
+          for (var i = 0.5; i < n; ++i, ++k) {
+            values[k] = goldsteinPrice(i / n * 4 - 2, 1 - j / m * 3);
+          }
+        }
+
+        var svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
+
+        svg.selectAll('*').remove();
+
+        var thresholds = d3.range(1, 21).map(function (p) {
+          return Math.pow(2, p);
+        });
+
+        var contours = d3.contours().size([n, m]).thresholds(thresholds);
+
+        var color = d3.scaleLog().domain(d3.extent(thresholds)).interpolate(function () {
+          return d3.interpolateYlGnBu;
+        });
+
+        svg.selectAll("path").data(contours(values)).enter().append("path").attr("d", d3.geoPath(d3.geoIdentity().scale(width / n))).attr("fill", function (d) {
+          return color(d.value);
+        });
+
+        function goldsteinPrice(x, y) {
+          return (1 + Math.pow(x + y + 1, 2) * (19 - 14 * x + 3 * x * x - 14 * y + 6 * x * x + 3 * y * y)) * (30 + Math.pow(2 * x - 3 * y, 2) * (18 - 32 * x + 12 * x * x + 48 * y - 36 * x * y + 27 * y * y));
+        }
+      }
+    }, {
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate() {}
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        window.removeEventListener('resize', this.updateDimensions);
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement('svg', { ref: 'svg', width: 800, height: 500 });
+      }
+    }]);
+
+    return Gradient;
+  }(_react.Component);
+};
+
+exports.default = create;
+
+},{"react":444}],499:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52027,7 +52136,7 @@ var create = function create(TopNav, Article) {
 
 exports.default = create;
 
-},{"../style/responsive":505,"react":444,"styled-components":451}],499:[function(require,module,exports){
+},{"../style/responsive":506,"react":444,"styled-components":451}],500:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52066,7 +52175,7 @@ var create = function create(ReactMarkdown) {
 
 exports.default = create;
 
-},{"../style/color":503,"../style/font":504,"react":444,"styled-components":451}],500:[function(require,module,exports){
+},{"../style/color":504,"../style/font":505,"react":444,"styled-components":451}],501:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52091,7 +52200,7 @@ var create = function create(SyntaxHighlighter) {
 
 exports.default = create;
 
-},{"react":444}],501:[function(require,module,exports){
+},{"react":444}],502:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52160,7 +52269,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/color":503,"../style/font":504,"react":444,"styled-components":451}],502:[function(require,module,exports){
+},{"../style/color":504,"../style/font":505,"react":444,"styled-components":451}],503:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -52199,6 +52308,10 @@ var _rust = require('./component/rust');
 
 var _rust2 = _interopRequireDefault(_rust);
 
+var _gradient = require('./component/gradient');
+
+var _gradient2 = _interopRequireDefault(_gradient);
+
 var _helloWorld = require('./article/hello-world/hello-world');
 
 var _helloWorld2 = _interopRequireDefault(_helloWorld);
@@ -52209,13 +52322,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var Article = (0, _article2.default)();
   var TopNav = (0, _topNav2.default)();
   var MainLayout = (0, _mainLayout2.default)(TopNav, Article);
+  var Gradient = (0, _gradient2.default)();
 
   var markdown = (0, _markdown2.default)(_reactMarkdown2.default);
   var rust = (0, _rust2.default)(_reactSyntaxHighlighter2.default);
 
   var dependencies = {
     markdown: markdown,
-    rust: rust
+    rust: rust,
+    Gradient: Gradient
   };
 
   var articles = [(0, _helloWorld2.default)(dependencies)];
@@ -52230,7 +52345,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   render();
 })(window);
 
-},{"./article/hello-world/hello-world":494,"./component/article":497,"./component/main-layout":498,"./component/markdown":499,"./component/rust":500,"./component/top-nav":501,"react":444,"react-dom":288,"react-markdown":414,"react-syntax-highlighter":417}],503:[function(require,module,exports){
+},{"./article/hello-world/hello-world":494,"./component/article":497,"./component/gradient":498,"./component/main-layout":499,"./component/markdown":500,"./component/rust":501,"./component/top-nav":502,"react":444,"react-dom":288,"react-markdown":414,"react-syntax-highlighter":417}],504:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52247,7 +52362,7 @@ var LightAzure = exports.LightAzure = '#2CCEC5';
 var BrightAzure = exports.BrightAzure = '#2df5ec';
 var LightBlue = exports.LightBlue = '#CCEEFF';
 
-},{}],504:[function(require,module,exports){
+},{}],505:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52257,7 +52372,7 @@ var PtSans = exports.PtSans = '\'PT Sans\', sans-serif';
 var Quicksand = exports.Quicksand = '\'Quicksand\', sans-serif';
 var Hack = exports.Hack = '\'Hack\', monospace';
 
-},{}],505:[function(require,module,exports){
+},{}],506:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52268,4 +52383,4 @@ var Tablet = exports.Tablet = '(min-width: 768px) and (max-width: 991px)';
 var Laptop = exports.Laptop = '(min-width: 992px) and (max-width: 1199px)';
 var Desktop = exports.Desktop = '(min-width: 1200px)';
 
-},{}]},{},[502]);
+},{}]},{},[503]);

@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 
 import createMarkdown from './component/markdown';
 import createRust from './component/rust';
+import createGradient from './component/gradient';
 
 import createHelloWorld from './article/hello-world/hello-world';
 
@@ -15,13 +16,15 @@ import createHelloWorld from './article/hello-world/hello-world';
   const Article = createArticle();
   const TopNav = createTopNav();
   const MainLayout = createMainLayout(TopNav, Article);
+  const Gradient = createGradient();
 
   const markdown = createMarkdown(ReactMarkdown);
   const rust = createRust(SyntaxHighlighter);
 
   const dependencies = {
     markdown,
-    rust
+    rust,
+    Gradient
   };
 
   const articles = [
