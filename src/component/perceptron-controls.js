@@ -22,12 +22,13 @@ const GradientContainer = styled.div`
   }
 `;
 
-const create = (Perceptron, Gradient, generateXorData) => class PerceptronControls extends Component {
+const create = (Perceptron, Gradient, Graph, generateXorData) => class PerceptronControls extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
+      iteration: 0,
       loss: 1,
       isTraining: false
     };
@@ -42,6 +43,7 @@ const create = (Perceptron, Gradient, generateXorData) => class PerceptronContro
     });
 
     const train = () => {
+      const losses = [];
       for(let i = 0; i < this._data.length; i++) {
         const loss = this._perceptron.train(
           //nj.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
@@ -50,10 +52,16 @@ const create = (Perceptron, Gradient, generateXorData) => class PerceptronContro
           this._data[i].y
         );
 
-        this.setState({
-          loss
-        });
+        losses.push(loss);
       }
+
+      const loss = nj.array(losses).mean();
+
+      this.setState({
+        iteration: this.state.iteration + 1,
+        loss
+      });
+      this.refs.graph.addData(this.state.iteration, this.state.loss);
 
       this.refs.gradient.updateDimensions(true);
 
@@ -87,6 +95,7 @@ const create = (Perceptron, Gradient, generateXorData) => class PerceptronContro
       <GradientContainer>
         <Gradient ref="gradient" f={f}/>
       </GradientContainer>
+      <Graph ref="graph" />
     </div>);
   }
 };

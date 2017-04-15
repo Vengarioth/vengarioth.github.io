@@ -31,7 +31,7 @@ const create = () => class Gradient extends Component {
       }
     }
 
-    var svg = d3.select("svg"),
+    var svg = d3.select(this.refs.svg),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 

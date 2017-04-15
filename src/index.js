@@ -10,6 +10,7 @@ import ReactMarkdown from 'react-markdown';
 import createMarkdown from './component/markdown';
 import createRust from './component/rust';
 import createGradient from './component/gradient';
+import createGraph from './component/graph';
 import Perceptron from './perceptron/perceptron';
 import generateXorData from './perceptron/generate-xor-data';
 
@@ -21,7 +22,8 @@ import createPerceptrons from './article/perceptrons/perceptrons';
   const TopNav = createTopNav();
   const MainLayout = createMainLayout(TopNav, Article);
   const Gradient = createGradient();
-  const PerceptronControls = createPerceptronControls(Perceptron, Gradient, generateXorData);
+  const Graph = createGraph();
+  const PerceptronControls = createPerceptronControls(Perceptron, Gradient, Graph, generateXorData);
 
   const markdown = createMarkdown(ReactMarkdown);
   const rust = createRust(SyntaxHighlighter);

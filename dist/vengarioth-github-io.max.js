@@ -76297,7 +76297,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/font":552,"react":484,"styled-components":491}],542:[function(require,module,exports){
+},{"../style/font":553,"react":484,"styled-components":491}],542:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76364,7 +76364,7 @@ var create = function create() {
           }
         }
 
-        var svg = d3.select("svg"),
+        var svg = d3.select(this.refs.svg),
             width = +svg.attr("width"),
             height = +svg.attr("height");
 
@@ -76410,6 +76410,114 @@ var create = function create() {
 exports.default = create;
 
 },{"react":484}],543:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var create = function create() {
+  return function (_Component) {
+    _inherits(Graph, _Component);
+
+    function Graph(props) {
+      _classCallCheck(this, Graph);
+
+      var _this = _possibleConstructorReturn(this, (Graph.__proto__ || Object.getPrototypeOf(Graph)).call(this, props));
+
+      _this.state = {
+        data: []
+      };
+      return _this;
+    }
+
+    _createClass(Graph, [{
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        this.update();
+      }
+    }, {
+      key: 'addData',
+      value: function addData(x, y) {
+        this.state.data.push({ x: x, y: y });
+        this.update();
+      }
+    }, {
+      key: 'update',
+      value: function update() {
+        var data = this.state.data;
+        var margin = { top: 30, right: 20, bottom: 30, left: 50 },
+            width = 600 - margin.left - margin.right,
+            height = 270 - margin.top - margin.bottom;
+
+        var x = d3.scaleLinear().range([0, width]);
+        var y = d3.scaleLinear().range([height, 0]);
+
+        var xAxis = d3.axisBottom().scale(x).ticks(5);
+
+        var yAxis = d3.axisLeft().scale(y).ticks(5);
+
+        var line = d3.line().x(function (d) {
+          return x(d.x);
+        }).y(function (d) {
+          return y(d.y);
+        });
+
+        var svg = d3.select(this.refs.svg);
+        svg.selectAll('*').remove();
+        svg.attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // Scale the range of the data
+        x.domain(d3.extent(data, function (d) {
+          return d.x;
+        }));
+        y.domain([0, d3.max(data, function (d) {
+          return d.y;
+        })]);
+
+        // Add the valueline path.
+        svg.append("path").attr("class", "line").attr("d", line(data)).attr('stroke', 'black').attr('fill', 'none').attr("transform", "translate(" + margin.left + ")");
+
+        // Add the X Axis
+        svg.append("g").attr("class", "x axis").attr("transform", "translate(" + margin.left + "," + height + ")").call(xAxis);
+
+        // Add the Y Axis
+        svg.append("g").attr("class", "y axis").attr("transform", "translate(" + margin.left + ")").call(yAxis);
+      }
+    }, {
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate() {}
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {}
+    }, {
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement('svg', { ref: 'svg', width: 200, height: 100 });
+      }
+    }]);
+
+    return Graph;
+  }(_react.Component);
+};
+
+exports.default = create;
+
+},{"react":484}],544:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76482,7 +76590,7 @@ var create = function create(TopNav, Article) {
 
 exports.default = create;
 
-},{"../style/responsive":553,"react":484,"styled-components":491}],544:[function(require,module,exports){
+},{"../style/responsive":554,"react":484,"styled-components":491}],545:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76521,7 +76629,7 @@ var create = function create(ReactMarkdown) {
 
 exports.default = create;
 
-},{"../style/color":551,"../style/font":552,"react":484,"styled-components":491}],545:[function(require,module,exports){
+},{"../style/color":552,"../style/font":553,"react":484,"styled-components":491}],546:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76558,7 +76666,7 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 var GradientContainer = _styledComponents2.default.div(_templateObject, _responsive.Phone, _responsive.Tablet, _responsive.Laptop, _responsive.Desktop);
 
-var create = function create(Perceptron, Gradient, generateXorData) {
+var create = function create(Perceptron, Gradient, Graph, generateXorData) {
   return function (_Component) {
     _inherits(PerceptronControls, _Component);
 
@@ -76568,6 +76676,7 @@ var create = function create(Perceptron, Gradient, generateXorData) {
       var _this = _possibleConstructorReturn(this, (PerceptronControls.__proto__ || Object.getPrototypeOf(PerceptronControls)).call(this, props));
 
       _this.state = {
+        iteration: 0,
         loss: 1,
         isTraining: false
       };
@@ -76587,16 +76696,23 @@ var create = function create(Perceptron, Gradient, generateXorData) {
         });
 
         var train = function train() {
+          var losses = [];
           for (var i = 0; i < _this2._data.length; i++) {
-            var loss = _this2._perceptron.train(
+            var _loss = _this2._perceptron.train(
             //nj.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
             //nj.array([[0], [1], [1], [0]])
             _this2._data[i].x, _this2._data[i].y);
 
-            _this2.setState({
-              loss: loss
-            });
+            losses.push(_loss);
           }
+
+          var loss = _numjs2.default.array(losses).mean();
+
+          _this2.setState({
+            iteration: _this2.state.iteration + 1,
+            loss: loss
+          });
+          _this2.refs.graph.addData(_this2.state.iteration, _this2.state.loss);
 
           _this2.refs.gradient.updateDimensions(true);
 
@@ -76654,7 +76770,8 @@ var create = function create(Perceptron, Gradient, generateXorData) {
             GradientContainer,
             null,
             _react2.default.createElement(Gradient, { ref: 'gradient', f: f })
-          )
+          ),
+          _react2.default.createElement(Graph, { ref: 'graph' })
         );
       }
     }]);
@@ -76665,7 +76782,7 @@ var create = function create(Perceptron, Gradient, generateXorData) {
 
 exports.default = create;
 
-},{"../style/responsive":553,"numjs":315,"react":484,"styled-components":491}],546:[function(require,module,exports){
+},{"../style/responsive":554,"numjs":315,"react":484,"styled-components":491}],547:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76690,7 +76807,7 @@ var create = function create(SyntaxHighlighter) {
 
 exports.default = create;
 
-},{"react":484}],547:[function(require,module,exports){
+},{"react":484}],548:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76759,7 +76876,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/color":551,"../style/font":552,"react":484,"styled-components":491}],548:[function(require,module,exports){
+},{"../style/color":552,"../style/font":553,"react":484,"styled-components":491}],549:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -76806,6 +76923,10 @@ var _gradient = require('./component/gradient');
 
 var _gradient2 = _interopRequireDefault(_gradient);
 
+var _graph = require('./component/graph');
+
+var _graph2 = _interopRequireDefault(_graph);
+
 var _perceptron = require('./perceptron/perceptron');
 
 var _perceptron2 = _interopRequireDefault(_perceptron);
@@ -76829,7 +76950,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var TopNav = (0, _topNav2.default)();
   var MainLayout = (0, _mainLayout2.default)(TopNav, Article);
   var Gradient = (0, _gradient2.default)();
-  var PerceptronControls = (0, _perceptronControls2.default)(_perceptron2.default, Gradient, _generateXorData2.default);
+  var Graph = (0, _graph2.default)();
+  var PerceptronControls = (0, _perceptronControls2.default)(_perceptron2.default, Gradient, Graph, _generateXorData2.default);
 
   var markdown = (0, _markdown2.default)(_reactMarkdown2.default);
   var rust = (0, _rust2.default)(_reactSyntaxHighlighter2.default);
@@ -76852,7 +76974,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   render();
 })(window);
 
-},{"./article/hello-world/hello-world":536,"./article/perceptrons/perceptrons":540,"./component/article":541,"./component/gradient":542,"./component/main-layout":543,"./component/markdown":544,"./component/perceptron-controls":545,"./component/rust":546,"./component/top-nav":547,"./perceptron/generate-xor-data":549,"./perceptron/perceptron":550,"react":484,"react-dom":328,"react-markdown":454,"react-syntax-highlighter":457}],549:[function(require,module,exports){
+},{"./article/hello-world/hello-world":536,"./article/perceptrons/perceptrons":540,"./component/article":541,"./component/gradient":542,"./component/graph":543,"./component/main-layout":544,"./component/markdown":545,"./component/perceptron-controls":546,"./component/rust":547,"./component/top-nav":548,"./perceptron/generate-xor-data":550,"./perceptron/perceptron":551,"react":484,"react-dom":328,"react-markdown":454,"react-syntax-highlighter":457}],550:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76910,7 +77032,7 @@ function generateXorData() {
   return trainData;
 }
 
-},{"numjs":315}],550:[function(require,module,exports){
+},{"numjs":315}],551:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77012,7 +77134,7 @@ var Perceptron = function () {
 
 exports.default = Perceptron;
 
-},{"numjs":315}],551:[function(require,module,exports){
+},{"numjs":315}],552:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77029,7 +77151,7 @@ var LightAzure = exports.LightAzure = '#2CCEC5';
 var BrightAzure = exports.BrightAzure = '#2df5ec';
 var LightBlue = exports.LightBlue = '#CCEEFF';
 
-},{}],552:[function(require,module,exports){
+},{}],553:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77039,7 +77161,7 @@ var PtSans = exports.PtSans = '\'PT Sans\', sans-serif';
 var Quicksand = exports.Quicksand = '\'Quicksand\', sans-serif';
 var Hack = exports.Hack = '\'Hack\', monospace';
 
-},{}],553:[function(require,module,exports){
+},{}],554:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -77050,4 +77172,4 @@ var Tablet = exports.Tablet = '(min-width: 768px) and (max-width: 991px)';
 var Laptop = exports.Laptop = '(min-width: 992px) and (max-width: 1199px)';
 var Desktop = exports.Desktop = '(min-width: 1200px)';
 
-},{}]},{},[548]);
+},{}]},{},[549]);
