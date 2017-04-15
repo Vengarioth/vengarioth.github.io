@@ -23,7 +23,7 @@ class Layer {
 }
 
 class Perceptron {
-  constructor(inputs = 2, hiddenLayer = 4, hiddenUnits = 32, outputs = 1) {
+  constructor(inputs = 2, hiddenLayer = 2, hiddenUnits = 16, outputs = 1) {
     this._layer = [];
     this._layer.push(new Layer(inputs, hiddenUnits));
 

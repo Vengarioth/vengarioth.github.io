@@ -23,7 +23,7 @@ const create = () => class Gradient extends Component {
     this.refs.svg.setAttribute('width', parentWidth);
     this.refs.svg.setAttribute('height', parentWidth);
 
-    const size = 5;
+    const size = 10;
     const n = size, m = size, values = new Array(n * m);
     for(let i = 0, k = 0; i < n; i++) {
       for(let j = 0; j < m; j++, k++) {

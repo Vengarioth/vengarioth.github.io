@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import nj from 'numjs';
+import { Phone, Tablet, Laptop, Desktop } from '../style/responsive';
 
 const GradientContainer = styled.div`
-  margin-left: 20em;
-  margin-right: 20em;
+  margin-left: auto;
+  margin-right: auto;
+  
+  @media ${ Phone } {
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+  @media ${ Tablet } {
+    width: 20em;
+  }
+  @media ${ Laptop } {
+    width: 30em;
+  }
+  @media ${ Desktop } {
+    width: 30em;
+  }
 `;
 
-const create = (Perceptron, Gradient) => class PerceptronControls extends Component {
+const create = (Perceptron, Gradient, generateXorData) => class PerceptronControls extends Component {
 
   constructor(props) {
     super(props);
@@ -18,6 +33,7 @@ const create = (Perceptron, Gradient) => class PerceptronControls extends Compon
     };
 
     this._perceptron = new Perceptron();
+    this._data = generateXorData();
   }
 
   startTraining() {
@@ -26,14 +42,18 @@ const create = (Perceptron, Gradient) => class PerceptronControls extends Compon
     });
 
     const train = () => {
-      const loss = this._perceptron.train(
-        nj.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
-        nj.array([[0], [1], [1], [0]])
-      );
+      for(let i = 0; i < this._data.length; i++) {
+        const loss = this._perceptron.train(
+          //nj.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
+          //nj.array([[0], [1], [1], [0]])
+          this._data[i].x,
+          this._data[i].y
+        );
 
-      this.setState({
-        loss
-      });
+        this.setState({
+          loss
+        });
+      }
 
       this.refs.gradient.updateDimensions(true);
 

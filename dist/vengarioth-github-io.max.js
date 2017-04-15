@@ -76297,7 +76297,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/font":551,"react":484,"styled-components":491}],542:[function(require,module,exports){
+},{"../style/font":552,"react":484,"styled-components":491}],542:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76354,7 +76354,7 @@ var create = function create() {
         this.refs.svg.setAttribute('width', parentWidth);
         this.refs.svg.setAttribute('height', parentWidth);
 
-        var size = 5;
+        var size = 10;
         var n = size,
             m = size,
             values = new Array(n * m);
@@ -76482,7 +76482,7 @@ var create = function create(TopNav, Article) {
 
 exports.default = create;
 
-},{"../style/responsive":552,"react":484,"styled-components":491}],544:[function(require,module,exports){
+},{"../style/responsive":553,"react":484,"styled-components":491}],544:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76521,7 +76521,7 @@ var create = function create(ReactMarkdown) {
 
 exports.default = create;
 
-},{"../style/color":550,"../style/font":551,"react":484,"styled-components":491}],545:[function(require,module,exports){
+},{"../style/color":551,"../style/font":552,"react":484,"styled-components":491}],545:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76530,7 +76530,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n  margin-left: 20em;\n  margin-right: 20em;\n'], ['\n  margin-left: 20em;\n  margin-right: 20em;\n']);
+var _templateObject = _taggedTemplateLiteral(['\n  margin-left: auto;\n  margin-right: auto;\n  \n  @media ', ' {\n    margin-left: 2em;\n    margin-right: 2em;\n  }\n  @media ', ' {\n    width: 20em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n'], ['\n  margin-left: auto;\n  margin-right: auto;\n  \n  @media ', ' {\n    margin-left: 2em;\n    margin-right: 2em;\n  }\n  @media ', ' {\n    width: 20em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n']);
 
 var _react = require('react');
 
@@ -76544,6 +76544,8 @@ var _numjs = require('numjs');
 
 var _numjs2 = _interopRequireDefault(_numjs);
 
+var _responsive = require('../style/responsive');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -76554,9 +76556,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var GradientContainer = _styledComponents2.default.div(_templateObject);
+var GradientContainer = _styledComponents2.default.div(_templateObject, _responsive.Phone, _responsive.Tablet, _responsive.Laptop, _responsive.Desktop);
 
-var create = function create(Perceptron, Gradient) {
+var create = function create(Perceptron, Gradient, generateXorData) {
   return function (_Component) {
     _inherits(PerceptronControls, _Component);
 
@@ -76571,6 +76573,7 @@ var create = function create(Perceptron, Gradient) {
       };
 
       _this._perceptron = new Perceptron();
+      _this._data = generateXorData();
       return _this;
     }
 
@@ -76584,11 +76587,16 @@ var create = function create(Perceptron, Gradient) {
         });
 
         var train = function train() {
-          var loss = _this2._perceptron.train(_numjs2.default.array([[0, 0], [0, 1], [1, 0], [1, 1]]), _numjs2.default.array([[0], [1], [1], [0]]));
+          for (var i = 0; i < _this2._data.length; i++) {
+            var loss = _this2._perceptron.train(
+            //nj.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
+            //nj.array([[0], [1], [1], [0]])
+            _this2._data[i].x, _this2._data[i].y);
 
-          _this2.setState({
-            loss: loss
-          });
+            _this2.setState({
+              loss: loss
+            });
+          }
 
           _this2.refs.gradient.updateDimensions(true);
 
@@ -76657,7 +76665,7 @@ var create = function create(Perceptron, Gradient) {
 
 exports.default = create;
 
-},{"numjs":315,"react":484,"styled-components":491}],546:[function(require,module,exports){
+},{"../style/responsive":553,"numjs":315,"react":484,"styled-components":491}],546:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76751,7 +76759,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/color":550,"../style/font":551,"react":484,"styled-components":491}],548:[function(require,module,exports){
+},{"../style/color":551,"../style/font":552,"react":484,"styled-components":491}],548:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -76802,6 +76810,10 @@ var _perceptron = require('./perceptron/perceptron');
 
 var _perceptron2 = _interopRequireDefault(_perceptron);
 
+var _generateXorData = require('./perceptron/generate-xor-data');
+
+var _generateXorData2 = _interopRequireDefault(_generateXorData);
+
 var _helloWorld = require('./article/hello-world/hello-world');
 
 var _helloWorld2 = _interopRequireDefault(_helloWorld);
@@ -76817,7 +76829,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var TopNav = (0, _topNav2.default)();
   var MainLayout = (0, _mainLayout2.default)(TopNav, Article);
   var Gradient = (0, _gradient2.default)();
-  var PerceptronControls = (0, _perceptronControls2.default)(_perceptron2.default, Gradient);
+  var PerceptronControls = (0, _perceptronControls2.default)(_perceptron2.default, Gradient, _generateXorData2.default);
 
   var markdown = (0, _markdown2.default)(_reactMarkdown2.default);
   var rust = (0, _rust2.default)(_reactSyntaxHighlighter2.default);
@@ -76840,7 +76852,65 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   render();
 })(window);
 
-},{"./article/hello-world/hello-world":536,"./article/perceptrons/perceptrons":540,"./component/article":541,"./component/gradient":542,"./component/main-layout":543,"./component/markdown":544,"./component/perceptron-controls":545,"./component/rust":546,"./component/top-nav":547,"./perceptron/perceptron":549,"react":484,"react-dom":328,"react-markdown":454,"react-syntax-highlighter":457}],549:[function(require,module,exports){
+},{"./article/hello-world/hello-world":536,"./article/perceptrons/perceptrons":540,"./component/article":541,"./component/gradient":542,"./component/main-layout":543,"./component/markdown":544,"./component/perceptron-controls":545,"./component/rust":546,"./component/top-nav":547,"./perceptron/generate-xor-data":549,"./perceptron/perceptron":550,"react":484,"react-dom":328,"react-markdown":454,"react-syntax-highlighter":457}],549:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = generateXorData;
+
+var _numjs = require('numjs');
+
+var _numjs2 = _interopRequireDefault(_numjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*
+  Generates data for this xor problem:
+y
+^ 1 | 0
+| --+--
+| 0 | 1
++------->x
+ */
+
+function generateXorData() {
+  var batches = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 40;
+  var batchSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+
+  // TODO test data
+
+  var trainData = [];
+
+  for (var t = 0; t < batches; t++) {
+    var batch = {
+      x: new Array(batchSize),
+      y: new Array(batchSize)
+    };
+
+    for (var i = 0; i < batchSize; i++) {
+      var x1 = Math.random();
+      var x2 = Math.random();
+      var y = 0;
+
+      if (x1 < 0.5 && x2 >= 0.5 || x1 > 0.5 && x2 < 0.5) {
+        y = 1;
+      }
+
+      batch.x[i] = [x1, x2];
+      batch.y[i] = [y];
+    }
+
+    batch.x = _numjs2.default.array(batch.x);
+    batch.y = _numjs2.default.array(batch.y);
+    trainData.push(batch);
+  }
+
+  return trainData;
+}
+
+},{"numjs":315}],550:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76887,8 +76957,8 @@ var Layer = function () {
 var Perceptron = function () {
   function Perceptron() {
     var inputs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
-    var hiddenLayer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
-    var hiddenUnits = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 32;
+    var hiddenLayer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+    var hiddenUnits = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 16;
     var outputs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
     _classCallCheck(this, Perceptron);
@@ -76942,7 +77012,7 @@ var Perceptron = function () {
 
 exports.default = Perceptron;
 
-},{"numjs":315}],550:[function(require,module,exports){
+},{"numjs":315}],551:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76959,7 +77029,7 @@ var LightAzure = exports.LightAzure = '#2CCEC5';
 var BrightAzure = exports.BrightAzure = '#2df5ec';
 var LightBlue = exports.LightBlue = '#CCEEFF';
 
-},{}],551:[function(require,module,exports){
+},{}],552:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76969,7 +77039,7 @@ var PtSans = exports.PtSans = '\'PT Sans\', sans-serif';
 var Quicksand = exports.Quicksand = '\'Quicksand\', sans-serif';
 var Hack = exports.Hack = '\'Hack\', monospace';
 
-},{}],552:[function(require,module,exports){
+},{}],553:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
