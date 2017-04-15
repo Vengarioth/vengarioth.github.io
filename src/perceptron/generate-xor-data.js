@@ -9,7 +9,7 @@ y
 +------->x
  */
 
-export default function generateXorData(batches = 40, batchSize = 4) {
+export default function generateXorData(batches = 40, batchSize = 6) {
   // TODO test data
 
   const trainData = [];

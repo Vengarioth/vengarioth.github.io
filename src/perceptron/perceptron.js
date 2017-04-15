@@ -23,7 +23,7 @@ class Layer {
 }
 
 class Perceptron {
-  constructor(inputs = 2, hiddenLayer = 2, hiddenUnits = 16, outputs = 1) {
+  constructor(inputs = 2, hiddenLayer = 2, hiddenUnits = 64, outputs = 1) {
     this._layer = [];
     this._layer.push(new Layer(inputs, hiddenUnits));
 
@@ -34,7 +34,7 @@ class Perceptron {
     this._layer.push(new Layer(hiddenUnits, outputs));
   }
 
-  train(x, y, alpha = 0.5) {
+  train(x, y, alpha = 0.25) {
     const activations = [x];
     for(let i = 0; i < this._layer.length; i++) {
       activations[i + 1] = this._layer[i].forward(activations[i]);

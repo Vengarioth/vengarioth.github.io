@@ -76999,7 +76999,7 @@ y
 
 function generateXorData() {
   var batches = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 40;
-  var batchSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+  var batchSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 6;
 
   // TODO test data
 
@@ -77080,7 +77080,7 @@ var Perceptron = function () {
   function Perceptron() {
     var inputs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
     var hiddenLayer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-    var hiddenUnits = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 16;
+    var hiddenUnits = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 64;
     var outputs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
     _classCallCheck(this, Perceptron);
@@ -77098,7 +77098,7 @@ var Perceptron = function () {
   _createClass(Perceptron, [{
     key: 'train',
     value: function train(x, y) {
-      var alpha = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.5;
+      var alpha = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.25;
 
       var activations = [x];
       for (var i = 0; i < this._layer.length; i++) {
