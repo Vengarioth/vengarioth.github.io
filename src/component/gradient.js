@@ -10,20 +10,24 @@ const create = () => class Gradient extends Component {
     this.updateDimensions();
   }
 
-  updateDimensions() {
+  updateDimensions(force = false) {
     const parentWidth = this.refs.svg.parentNode.clientWidth;
-    if(parentWidth === this._lastWidth) {
+    if(!force && parentWidth === this._lastWidth) {
       return;
     }
+
+    const f = this.props.f ? this.props.f : goldsteinPrice;
 
     this._lastWidth = parentWidth;
 
     this.refs.svg.setAttribute('width', parentWidth);
+    this.refs.svg.setAttribute('height', parentWidth);
 
-    var n = 240, m = 125, values = new Array(n * m);
-    for (var j = 0.5, k = 0; j < m; ++j) {
-      for (var i = 0.5; i < n; ++i, ++k) {
-        values[k] = goldsteinPrice(i / n * 4 - 2, 1 - j / m * 3);
+    const size = 5;
+    const n = size, m = size, values = new Array(n * m);
+    for(let i = 0, k = 0; i < n; i++) {
+      for(let j = 0; j < m; j++, k++) {
+        values[k] = f(i / size, j / size);
       }
     }
 
@@ -33,8 +37,8 @@ const create = () => class Gradient extends Component {
 
     svg.selectAll('*').remove();
 
-    var thresholds = d3.range(1, 21)
-    .map(function(p) { return Math.pow(2, p); });
+    var thresholds = d3.range(1, 11)
+      .map(function(p) { return p / 10; });
 
     var contours = d3.contours()
     .size([n, m])
@@ -66,7 +70,7 @@ const create = () => class Gradient extends Component {
 
   render() {
     return (
-      <svg ref="svg" width={800} height={500} />
+      <svg ref="svg" width={200} height={200} />
     );
   }
 };

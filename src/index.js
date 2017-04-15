@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import createArticle from './component/article';
 import createTopNav from './component/top-nav';
 import createMainLayout from './component/main-layout';
+import createPerceptronControls from './component/perceptron-controls';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import ReactMarkdown from 'react-markdown';
 
@@ -12,25 +13,26 @@ import createGradient from './component/gradient';
 import Perceptron from './perceptron/perceptron';
 
 import createHelloWorld from './article/hello-world/hello-world';
+import createPerceptrons from './article/perceptrons/perceptrons';
 
 ((global) => {
   const Article = createArticle();
   const TopNav = createTopNav();
   const MainLayout = createMainLayout(TopNav, Article);
   const Gradient = createGradient();
+  const PerceptronControls = createPerceptronControls(Perceptron, Gradient);
 
   const markdown = createMarkdown(ReactMarkdown);
   const rust = createRust(SyntaxHighlighter);
 
-  new Perceptron();
-
   const dependencies = {
     markdown,
     rust,
-    Gradient
+    PerceptronControls
   };
 
   const articles = [
+    createPerceptrons(dependencies),
     createHelloWorld(dependencies)
   ];
 

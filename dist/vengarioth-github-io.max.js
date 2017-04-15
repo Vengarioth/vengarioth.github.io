@@ -76128,8 +76128,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function create(_ref) {
   var markdown = _ref.markdown,
-      rust = _ref.rust,
-      Gradient = _ref.Gradient;
+      rust = _ref.rust;
 
   var getId = function getId() {
     return 'hello-world';
@@ -76146,8 +76145,7 @@ function create(_ref) {
       'div',
       null,
       markdown(_test2.default),
-      rust(_source2.default),
-      _react2.default.createElement(Gradient, null)
+      rust(_source2.default)
     );
   };
 
@@ -76165,6 +76163,60 @@ module.exports = "fn main() {\n    let greetings = [\"Hello\", \"Hola\", \"Bonjo
 module.exports = "# Big Headline\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n## Smaller Headline\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n### Even smaller Headline\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n#### Yet still smaller Headline\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n##### Ok now it's getting silly\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n###### Stop! This is too much!\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n---\n> yay! awesome quotes.\n\nsome paragraphs!\n\n* list 1\n* list 2\n    * list 2.1\n    * list 2.2\n        * list 2.2.1\n\n[a link](//www.google.com)\n\n![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png \"Logo Title Text 1\")\n\nSome paragraph text. Some paragraph text. Some paragraph text.\nInline `code` has `back-ticks around` it.\nSome paragraph text. Some paragraph text. Some paragraph text. Some paragraph text. Some paragraph text. Some paragraph text.\nInline code has back-ticks around it.\nSome paragraph text.\n";
 
 },{}],539:[function(require,module,exports){
+module.exports = "# Concerning perceptrons\n\nIn this article i want to explore the interactiveness this cobbled together blog can achieve. We will train a perceptron on the x-or problem and visualize its weights, gradients and train/test losses.\n";
+
+},{}],540:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = create;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _introduction = require('./introduction.md');
+
+var _introduction2 = _interopRequireDefault(_introduction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function create(_ref) {
+  var markdown = _ref.markdown,
+      PerceptronControls = _ref.PerceptronControls;
+
+  var getId = function getId() {
+    return 'perceptrons';
+  };
+
+  var getHeader = function getHeader() {
+    return _react2.default.createElement(
+      'span',
+      null,
+      'Concerning perceptrons'
+    );
+  };
+
+  var getContent = function getContent() {
+
+    return _react2.default.createElement(
+      'div',
+      null,
+      markdown(_introduction2.default),
+      _react2.default.createElement(PerceptronControls, null)
+    );
+  };
+
+  return {
+    getId: getId,
+    getHeader: getHeader,
+    getContent: getContent
+  };
+}
+
+},{"./introduction.md":539,"react":484}],541:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76245,7 +76297,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/font":548,"react":484,"styled-components":491}],540:[function(require,module,exports){
+},{"../style/font":551,"react":484,"styled-components":491}],542:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76288,21 +76340,27 @@ var create = function create() {
     }, {
       key: 'updateDimensions',
       value: function updateDimensions() {
+        var force = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
         var parentWidth = this.refs.svg.parentNode.clientWidth;
-        if (parentWidth === this._lastWidth) {
+        if (!force && parentWidth === this._lastWidth) {
           return;
         }
+
+        var f = this.props.f ? this.props.f : goldsteinPrice;
 
         this._lastWidth = parentWidth;
 
         this.refs.svg.setAttribute('width', parentWidth);
+        this.refs.svg.setAttribute('height', parentWidth);
 
-        var n = 240,
-            m = 125,
+        var size = 5;
+        var n = size,
+            m = size,
             values = new Array(n * m);
-        for (var j = 0.5, k = 0; j < m; ++j) {
-          for (var i = 0.5; i < n; ++i, ++k) {
-            values[k] = goldsteinPrice(i / n * 4 - 2, 1 - j / m * 3);
+        for (var i = 0, k = 0; i < n; i++) {
+          for (var j = 0; j < m; j++, k++) {
+            values[k] = f(i / size, j / size);
           }
         }
 
@@ -76312,8 +76370,8 @@ var create = function create() {
 
         svg.selectAll('*').remove();
 
-        var thresholds = d3.range(1, 21).map(function (p) {
-          return Math.pow(2, p);
+        var thresholds = d3.range(1, 11).map(function (p) {
+          return p / 10;
         });
 
         var contours = d3.contours().size([n, m]).thresholds(thresholds);
@@ -76341,7 +76399,7 @@ var create = function create() {
     }, {
       key: 'render',
       value: function render() {
-        return _react2.default.createElement('svg', { ref: 'svg', width: 800, height: 500 });
+        return _react2.default.createElement('svg', { ref: 'svg', width: 200, height: 200 });
       }
     }]);
 
@@ -76351,7 +76409,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"react":484}],541:[function(require,module,exports){
+},{"react":484}],543:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76424,7 +76482,7 @@ var create = function create(TopNav, Article) {
 
 exports.default = create;
 
-},{"../style/responsive":549,"react":484,"styled-components":491}],542:[function(require,module,exports){
+},{"../style/responsive":552,"react":484,"styled-components":491}],544:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76463,7 +76521,143 @@ var create = function create(ReactMarkdown) {
 
 exports.default = create;
 
-},{"../style/color":547,"../style/font":548,"react":484,"styled-components":491}],543:[function(require,module,exports){
+},{"../style/color":550,"../style/font":551,"react":484,"styled-components":491}],545:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _templateObject = _taggedTemplateLiteral(['\n  margin-left: 20em;\n  margin-right: 20em;\n'], ['\n  margin-left: 20em;\n  margin-right: 20em;\n']);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _styledComponents = require('styled-components');
+
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+var _numjs = require('numjs');
+
+var _numjs2 = _interopRequireDefault(_numjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var GradientContainer = _styledComponents2.default.div(_templateObject);
+
+var create = function create(Perceptron, Gradient) {
+  return function (_Component) {
+    _inherits(PerceptronControls, _Component);
+
+    function PerceptronControls(props) {
+      _classCallCheck(this, PerceptronControls);
+
+      var _this = _possibleConstructorReturn(this, (PerceptronControls.__proto__ || Object.getPrototypeOf(PerceptronControls)).call(this, props));
+
+      _this.state = {
+        loss: 1,
+        isTraining: false
+      };
+
+      _this._perceptron = new Perceptron();
+      return _this;
+    }
+
+    _createClass(PerceptronControls, [{
+      key: 'startTraining',
+      value: function startTraining() {
+        var _this2 = this;
+
+        this.setState({
+          isTraining: true
+        });
+
+        var train = function train() {
+          var loss = _this2._perceptron.train(_numjs2.default.array([[0, 0], [0, 1], [1, 0], [1, 1]]), _numjs2.default.array([[0], [1], [1], [0]]));
+
+          _this2.setState({
+            loss: loss
+          });
+
+          _this2.refs.gradient.updateDimensions(true);
+
+          if (_this2.state.isTraining) {
+            window.requestAnimationFrame(train);
+          }
+        };
+
+        window.requestAnimationFrame(train);
+      }
+    }, {
+      key: 'stopTraining',
+      value: function stopTraining() {
+        this.setState({
+          isTraining: false
+        });
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _this3 = this;
+
+        var loss = this.state.loss;
+        var startTraining = function startTraining() {
+          return _this3.startTraining();
+        };
+        var stopTraining = function stopTraining() {
+          return _this3.stopTraining();
+        };
+        var button = this.state.isTraining ? _react2.default.createElement(
+          'button',
+          { onClick: stopTraining },
+          'Stop'
+        ) : _react2.default.createElement(
+          'button',
+          { onClick: startTraining },
+          'Start'
+        );
+        var f = function f(x, y) {
+          return _this3._perceptron.predict(_numjs2.default.array([x, y]));
+        };
+
+        return _react2.default.createElement(
+          'div',
+          null,
+          button,
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'span',
+            null,
+            'loss: ',
+            loss
+          ),
+          _react2.default.createElement(
+            GradientContainer,
+            null,
+            _react2.default.createElement(Gradient, { ref: 'gradient', f: f })
+          )
+        );
+      }
+    }]);
+
+    return PerceptronControls;
+  }(_react.Component);
+};
+
+exports.default = create;
+
+},{"numjs":315,"react":484,"styled-components":491}],546:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76488,7 +76682,7 @@ var create = function create(SyntaxHighlighter) {
 
 exports.default = create;
 
-},{"react":484}],544:[function(require,module,exports){
+},{"react":484}],547:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76557,7 +76751,7 @@ var create = function create() {
 
 exports.default = create;
 
-},{"../style/color":547,"../style/font":548,"react":484,"styled-components":491}],545:[function(require,module,exports){
+},{"../style/color":550,"../style/font":551,"react":484,"styled-components":491}],548:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -76579,6 +76773,10 @@ var _topNav2 = _interopRequireDefault(_topNav);
 var _mainLayout = require('./component/main-layout');
 
 var _mainLayout2 = _interopRequireDefault(_mainLayout);
+
+var _perceptronControls = require('./component/perceptron-controls');
+
+var _perceptronControls2 = _interopRequireDefault(_perceptronControls);
 
 var _reactSyntaxHighlighter = require('react-syntax-highlighter');
 
@@ -76608,6 +76806,10 @@ var _helloWorld = require('./article/hello-world/hello-world');
 
 var _helloWorld2 = _interopRequireDefault(_helloWorld);
 
+var _perceptrons = require('./article/perceptrons/perceptrons');
+
+var _perceptrons2 = _interopRequireDefault(_perceptrons);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function (global) {
@@ -76615,19 +76817,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   var TopNav = (0, _topNav2.default)();
   var MainLayout = (0, _mainLayout2.default)(TopNav, Article);
   var Gradient = (0, _gradient2.default)();
+  var PerceptronControls = (0, _perceptronControls2.default)(_perceptron2.default, Gradient);
 
   var markdown = (0, _markdown2.default)(_reactMarkdown2.default);
   var rust = (0, _rust2.default)(_reactSyntaxHighlighter2.default);
 
-  new _perceptron2.default();
-
   var dependencies = {
     markdown: markdown,
     rust: rust,
-    Gradient: Gradient
+    PerceptronControls: PerceptronControls
   };
 
-  var articles = [(0, _helloWorld2.default)(dependencies)];
+  var articles = [(0, _perceptrons2.default)(dependencies), (0, _helloWorld2.default)(dependencies)];
 
   var container = global.document.createElement('div');
   global.document.body.appendChild(container);
@@ -76639,7 +76840,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   render();
 })(window);
 
-},{"./article/hello-world/hello-world":536,"./component/article":539,"./component/gradient":540,"./component/main-layout":541,"./component/markdown":542,"./component/rust":543,"./component/top-nav":544,"./perceptron/perceptron":546,"react":484,"react-dom":328,"react-markdown":454,"react-syntax-highlighter":457}],546:[function(require,module,exports){
+},{"./article/hello-world/hello-world":536,"./article/perceptrons/perceptrons":540,"./component/article":541,"./component/gradient":542,"./component/main-layout":543,"./component/markdown":544,"./component/perceptron-controls":545,"./component/rust":546,"./component/top-nav":547,"./perceptron/perceptron":549,"react":484,"react-dom":328,"react-markdown":454,"react-syntax-highlighter":457}],549:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76685,49 +76886,54 @@ var Layer = function () {
 
 var Perceptron = function () {
   function Perceptron() {
-    var inputs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
-    var hiddenUnits = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 32;
-    var outputs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var inputs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+    var hiddenLayer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+    var hiddenUnits = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 32;
+    var outputs = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 
     _classCallCheck(this, Perceptron);
 
-    this._layer = [new Layer(inputs, hiddenUnits), new Layer(hiddenUnits, hiddenUnits), new Layer(hiddenUnits, hiddenUnits), new Layer(hiddenUnits, outputs)];
+    this._layer = [];
+    this._layer.push(new Layer(inputs, hiddenUnits));
 
-    this.train(_numjs2.default.array([[0, 0, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1]]), _numjs2.default.array([[0], [1], [1], [0]]));
+    for (var i = 0; i < hiddenLayer; i++) {
+      this._layer.push(new Layer(hiddenUnits, hiddenUnits));
+    }
+
+    this._layer.push(new Layer(hiddenUnits, outputs));
   }
 
   _createClass(Perceptron, [{
     key: 'train',
     value: function train(x, y) {
-      var _this = this;
+      var alpha = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.5;
 
-      var e = 0;
-      var epoch = function epoch() {
+      var activations = [x];
+      for (var i = 0; i < this._layer.length; i++) {
+        activations[i + 1] = this._layer[i].forward(activations[i]);
+      }
 
-        var activations = [x];
-        for (var i = 0; i < _this._layer.length; i++) {
-          activations[i + 1] = _this._layer[i].forward(activations[i]);
-        }
+      var delta = void 0;
+      var error = activations[activations.length - 1].subtract(y);
+      var loss = _numjs2.default.abs(error).mean(); // TODO xentropy loss
+      for (var _i = activations.length - 1; _i > 0; _i--) {
+        delta = this._layer[_i - 1].backward(error);
+        error = delta.dot(this._layer[_i - 1].W.T);
 
-        var delta = void 0;
-        var error = activations[activations.length - 1].subtract(y);
-        if (e % 100 < 1) {
-          console.log('loss: ' + _numjs2.default.abs(error).mean());
-        }
-        for (var _i = activations.length - 1; _i > 0; _i--) {
-          delta = _this._layer[_i - 1].backward(error);
-          error = delta.dot(_this._layer[_i - 1].W.T);
+        this._layer[_i - 1].W = this._layer[_i - 1].W.subtract(activations[_i - 1].T.dot(delta).multiply(alpha));
+      }
 
-          _this._layer[_i - 1].W = _this._layer[_i - 1].W.subtract(activations[_i - 1].T.dot(delta).multiply(1));
-        }
+      return loss;
+    }
+  }, {
+    key: 'predict',
+    value: function predict(x) {
+      var activation = x;
+      for (var i = 0; i < this._layer.length; i++) {
+        activation = this._layer[i].forward(activation);
+      }
 
-        window.requestAnimationFrame(function () {
-          return epoch();
-        });
-        e++;
-      };
-
-      epoch();
+      return activation.get(0);
     }
   }]);
 
@@ -76736,7 +76942,7 @@ var Perceptron = function () {
 
 exports.default = Perceptron;
 
-},{"numjs":315}],547:[function(require,module,exports){
+},{"numjs":315}],550:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76753,7 +76959,7 @@ var LightAzure = exports.LightAzure = '#2CCEC5';
 var BrightAzure = exports.BrightAzure = '#2df5ec';
 var LightBlue = exports.LightBlue = '#CCEEFF';
 
-},{}],548:[function(require,module,exports){
+},{}],551:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76763,7 +76969,7 @@ var PtSans = exports.PtSans = '\'PT Sans\', sans-serif';
 var Quicksand = exports.Quicksand = '\'Quicksand\', sans-serif';
 var Hack = exports.Hack = '\'Hack\', monospace';
 
-},{}],549:[function(require,module,exports){
+},{}],552:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -76774,4 +76980,4 @@ var Tablet = exports.Tablet = '(min-width: 768px) and (max-width: 991px)';
 var Laptop = exports.Laptop = '(min-width: 992px) and (max-width: 1199px)';
 var Desktop = exports.Desktop = '(min-width: 1200px)';
 
-},{}]},{},[545]);
+},{}]},{},[548]);

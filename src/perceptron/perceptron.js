@@ -23,46 +23,43 @@ class Layer {
 }
 
 class Perceptron {
-  constructor(inputs = 3, hiddenUnits = 32, outputs = 1) {
+  constructor(inputs = 2, hiddenLayer = 4, hiddenUnits = 32, outputs = 1) {
+    this._layer = [];
+    this._layer.push(new Layer(inputs, hiddenUnits));
 
-    this._layer = [
-      new Layer(inputs, hiddenUnits),
-      new Layer(hiddenUnits, hiddenUnits),
-      new Layer(hiddenUnits, hiddenUnits),
-      new Layer(hiddenUnits, outputs)
-    ];
+    for(let i = 0; i < hiddenLayer; i++) {
+      this._layer.push(new Layer(hiddenUnits, hiddenUnits));
+    }
 
-    this.train(
-      nj.array([[0, 0, 1], [0, 1, 1], [1, 0, 1], [1, 1, 1]]),
-      nj.array([[0], [1], [1], [0]]));
+    this._layer.push(new Layer(hiddenUnits, outputs));
   }
 
-  train(x, y) {
-    let e = 0;
-    const epoch = () => {
+  train(x, y, alpha = 0.5) {
+    const activations = [x];
+    for(let i = 0; i < this._layer.length; i++) {
+      activations[i + 1] = this._layer[i].forward(activations[i]);
+    }
 
-      const activations = [x];
-      for(let i = 0; i < this._layer.length; i++) {
-        activations[i + 1] = this._layer[i].forward(activations[i]);
-      }
+    let delta;
+    let error = activations[activations.length - 1].subtract(y);
+    const loss = nj.abs(error).mean(); // TODO xentropy loss
+    for(let i = activations.length - 1; i > 0; i--) {
+      delta = this._layer[i - 1].backward(error);
+      error = delta.dot(this._layer[i - 1].W.T);
 
-      let delta;
-      let error = activations[activations.length - 1].subtract(y);
-      if(e % 100 < 1) {
-        console.log('loss: ' + nj.abs(error).mean());
-      }
-      for(let i = activations.length - 1; i > 0; i--) {
-        delta = this._layer[i - 1].backward(error);
-        error = delta.dot(this._layer[i - 1].W.T);
+      this._layer[i - 1].W = this._layer[i - 1].W.subtract(activations[i - 1].T.dot(delta).multiply(alpha));
+    }
 
-        this._layer[i - 1].W = this._layer[i - 1].W.subtract(activations[i - 1].T.dot(delta).multiply(1));
-      }
+    return loss;
+  }
 
-      window.requestAnimationFrame(() => epoch());
-      e++;
-    };
+  predict(x) {
+    let activation = x;
+    for(let i = 0; i < this._layer.length; i++) {
+      activation = this._layer[i].forward(activation);
+    }
 
-    epoch();
+    return activation.get(0);
   }
 }
 
