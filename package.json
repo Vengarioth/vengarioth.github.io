@@ -5,10 +5,15 @@
   "description": "https://vengarioth.github.io",
   "main": "index.js",
   "scripts": {
-    "uglify": "uglifyjs --compress --mangle --screw-ie8 -o dist/vengarioth-github-io.js -- dist/vengarioth-github-io.max.js",
-    "watch": "watchify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] -t [ stringify  --extensions [.md .rs] ]",
-    "start": "http-server .",
-    "bundle": "rimraf dist && mkdirp dist && NODE_ENV=production browserify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] -t [ stringify  --extensions [.md .rs] ] && npm run uglify",
+    "uglify": "npm run uglify-app && npm run uglify-worker",
+    "uglify-app": "uglifyjs --compress --mangle --screw-ie8 -o dist/vengarioth-github-io.js -- dist/vengarioth-github-io.max.js",
+    "uglify-worker": "uglifyjs --compress --mangle --screw-ie8 -o dist/vengarioth-github-io-worker.js -- dist/vengarioth-github-io-worker.max.js",
+    "watch-app": "watchify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] -t [ stringify  --extensions [.md .rs] ]",
+    "watch-worker": "watchify src/worker.js -o dist/vengarioth-github-io-worker.max.js -t [ babelify ]",
+    "start": "concurrently \"http-server .\" \"npm run watch-app\" \"npm run watch-worker\"",
+    "bundle": "rimraf dist && mkdirp dist && NODE_ENV=production && npm run bundle-app && npm run bundle-worker && npm run uglify",
+    "bundle-app": "browserify src/index.js -o dist/vengarioth-github-io.max.js -t [ babelify ] -t [ stringify  --extensions [.md .rs] ]",
+    "bundle-worker": "browserify src/worker.js -o dist/vengarioth-github-io-worker.max.js -t [ babelify ]",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "babel": {
@@ -47,6 +52,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
     "browserify-shim": "^3.8.14",
+    "concurrently": "^3.4.0",
     "envify": "^3.4.1",
     "enzyme": "^2.4.1",
     "eslint": "^3.19.0",

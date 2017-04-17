@@ -7,6 +7,8 @@ import createPerceptronControls from './component/perceptron-controls';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import ReactMarkdown from 'react-markdown';
 
+import createWorkerClient from './worker/worker-client';
+
 import createMarkdown from './component/markdown';
 import createRust from './component/rust';
 import createGradient from './component/gradient';
@@ -23,7 +25,8 @@ import createPerceptrons from './article/perceptrons/perceptrons';
   const MainLayout = createMainLayout(TopNav, Article);
   const Gradient = createGradient();
   const Graph = createGraph();
-  const PerceptronControls = createPerceptronControls(Perceptron, Gradient, Graph, generateXorData);
+  const WorkerClient = createWorkerClient();
+  const PerceptronControls = createPerceptronControls(WorkerClient, Gradient, Graph);
 
   const markdown = createMarkdown(ReactMarkdown);
   const rust = createRust(SyntaxHighlighter);

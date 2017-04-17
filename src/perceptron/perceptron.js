@@ -59,7 +59,7 @@ class Perceptron {
       activation = this._layer[i].forward(activation);
     }
 
-    return activation.get(0);
+    return activation.tolist();
   }
 }
 

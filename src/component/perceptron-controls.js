@@ -22,7 +22,7 @@ const GradientContainer = styled.div`
   }
 `;
 
-const create = (Perceptron, Gradient, Graph, generateXorData) => class PerceptronControls extends Component {
+const create = (WorkerClient, Gradient, Graph) => class PerceptronControls extends Component {
 
   constructor(props) {
     super(props);
@@ -33,8 +33,41 @@ const create = (Perceptron, Gradient, Graph, generateXorData) => class Perceptro
       isTraining: false
     };
 
-    this._perceptron = new Perceptron();
-    this._data = generateXorData();
+    this._worker = new WorkerClient();
+    this._worker.start();
+    this._worker.send('create', {
+      inputs: 2,
+      hiddenLayer: 2,
+      hiddenUnits: 32,
+      outputs: 1
+    });
+
+    const size = 10;
+    this._worker.on('trainingLoss', ({ loss, iteration }) => {
+      this.setState({
+        iteration,
+        loss
+      });
+      this.refs.graph.addData(iteration, loss);
+
+      this.updateGradient(size);
+    });
+    this._worker.on('prediction', ({ data }) => {
+      const converted = data.map((e) => e[0]);
+      this.refs.gradient.update(size, size, converted);
+    });
+    this.updateGradient(size);
+  }
+
+  updateGradient(size) {
+    const n = size, m = size, values = new Array(n * m);
+    for(let i = 0, k = 0; i < n; i++) {
+      for(let j = 0; j < m; j++, k++) {
+        values[k] = [i / size, j / size];
+      }
+    }
+
+    this._worker.send('predict', { data: values });
   }
 
   startTraining() {
@@ -42,41 +75,15 @@ const create = (Perceptron, Gradient, Graph, generateXorData) => class Perceptro
       isTraining: true
     });
 
-    const train = () => {
-      const losses = [];
-      for(let i = 0; i < this._data.length; i++) {
-        const loss = this._perceptron.train(
-          //nj.array([[0, 0], [0, 1], [1, 0], [1, 1]]),
-          //nj.array([[0], [1], [1], [0]])
-          this._data[i].x,
-          this._data[i].y
-        );
-
-        losses.push(loss);
-      }
-
-      const loss = nj.array(losses).mean();
-
-      this.setState({
-        iteration: this.state.iteration + 1,
-        loss
-      });
-      this.refs.graph.addData(this.state.iteration, this.state.loss);
-
-      this.refs.gradient.updateDimensions(true);
-
-      if(this.state.isTraining) {
-        window.requestAnimationFrame(train);
-      }
-    };
-
-    window.requestAnimationFrame(train);
+    this._worker.send('startTraining');
   }
 
   stopTraining() {
     this.setState({
       isTraining: false
     });
+
+    this._worker.send('stopTraining');
   }
 
   render() {
@@ -85,7 +92,8 @@ const create = (Perceptron, Gradient, Graph, generateXorData) => class Perceptro
     const stopTraining = () => this.stopTraining();
     const button = this.state.isTraining ? (<button onClick={stopTraining}>Stop</button>) : (<button onClick={startTraining}>Start</button>);
     const f = (x, y) => {
-      return this._perceptron.predict(nj.array([x, y]));
+      // return this._perceptron.predict(nj.array([x, y]));
+      return x;
     };
 
     return (<div>

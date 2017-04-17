@@ -10,9 +10,35 @@ const create = () => class Gradient extends Component {
     this.updateDimensions();
   }
 
-  updateDimensions(force = false) {
+  update(n, m, data) {
+    this.updateDimensions();
+    const svg = d3.select(this.refs.svg),
+      width = +svg.attr("width"),
+      height = +svg.attr("height");
+
+    svg.selectAll('*').remove();
+
+    const thresholds = d3.range(1, 11)
+      .map(function(p) { return p / 10; });
+
+    const contours = d3.contours()
+      .size([n, m])
+      .thresholds(thresholds);
+
+    const color = d3.scaleLog()
+      .domain(d3.extent(thresholds))
+      .interpolate(function() { return d3.interpolateYlGnBu; });
+
+    svg.selectAll("path")
+      .data(contours(data))
+      .enter().append("path")
+      .attr("d", d3.geoPath(d3.geoIdentity().scale(width / n)))
+      .attr("fill", function(d) { return color(d.value); });
+  }
+
+  updateDimensions() {
     const parentWidth = this.refs.svg.parentNode.clientWidth;
-    if(!force && parentWidth === this._lastWidth) {
+    if(parentWidth === this._lastWidth) {
       return;
     }
 
@@ -22,42 +48,6 @@ const create = () => class Gradient extends Component {
 
     this.refs.svg.setAttribute('width', parentWidth);
     this.refs.svg.setAttribute('height', parentWidth);
-
-    const size = 10;
-    const n = size, m = size, values = new Array(n * m);
-    for(let i = 0, k = 0; i < n; i++) {
-      for(let j = 0; j < m; j++, k++) {
-        values[k] = f(i / size, j / size);
-      }
-    }
-
-    var svg = d3.select(this.refs.svg),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
-
-    svg.selectAll('*').remove();
-
-    var thresholds = d3.range(1, 11)
-      .map(function(p) { return p / 10; });
-
-    var contours = d3.contours()
-    .size([n, m])
-    .thresholds(thresholds);
-
-    var color = d3.scaleLog()
-    .domain(d3.extent(thresholds))
-    .interpolate(function() { return d3.interpolateYlGnBu; });
-
-    svg.selectAll("path")
-    .data(contours(values))
-    .enter().append("path")
-    .attr("d", d3.geoPath(d3.geoIdentity().scale(width / n)))
-    .attr("fill", function(d) { return color(d.value); });
-
-    function goldsteinPrice(x, y) {
-      return (1 + Math.pow(x + y + 1, 2) * (19 - 14 * x + 3 * x * x - 14 * y + 6 * x * x + 3 * y * y))
-      * (30 + Math.pow(2 * x - 3 * y, 2) * (18 - 32 * x + 12 * x * x + 48 * y - 36 * x * y + 27 * y * y));
-    }
   }
 
   componentDidUpdate() {
