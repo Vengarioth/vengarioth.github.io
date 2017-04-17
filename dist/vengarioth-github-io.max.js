@@ -45132,7 +45132,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_34_q=3*_inline_34_arg2_+10*_inline_34_arg3_+3*_inline_34_arg4_-3*_inline_34_arg7_-10*_inline_34_arg8_-3*_inline_34_arg9_,_inline_34_s=3*_inline_34_arg2_-3*_inline_34_arg4_+10*_inline_34_arg5_-10*_inline_34_arg6_+3*_inline_34_arg7_-3*_inline_34_arg9_;_inline_34_arg0_=Math.sqrt(_inline_34_s*_inline_34_s+_inline_34_q*_inline_34_q)}","args":[{"name":"_inline_34_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_34_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_34_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_34_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_34_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_34_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_34_q","_inline_34_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_31_q=3*_inline_31_arg2_+10*_inline_31_arg3_+3*_inline_31_arg4_-3*_inline_31_arg7_-10*_inline_31_arg8_-3*_inline_31_arg9_,_inline_31_s=3*_inline_31_arg2_-3*_inline_31_arg4_+10*_inline_31_arg5_-10*_inline_31_arg6_+3*_inline_31_arg7_-3*_inline_31_arg9_;_inline_31_arg0_=Math.sqrt(_inline_31_s*_inline_31_s+_inline_31_q*_inline_31_q)}","args":[{"name":"_inline_31_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_31_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_31_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_31_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_31_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_31_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_31_q","_inline_31_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Scharr transform.
@@ -45171,7 +45171,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_31_q=_inline_31_arg2_+2*_inline_31_arg3_+_inline_31_arg4_-_inline_31_arg7_-2*_inline_31_arg8_-_inline_31_arg9_,_inline_31_s=_inline_31_arg2_-_inline_31_arg4_+2*_inline_31_arg5_-2*_inline_31_arg6_+_inline_31_arg7_-_inline_31_arg9_;_inline_31_arg0_=Math.sqrt(_inline_31_s*_inline_31_s+_inline_31_q*_inline_31_q)}","args":[{"name":"_inline_31_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_31_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_31_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_31_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_31_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_31_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_31_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_31_q","_inline_31_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_34_q=_inline_34_arg2_+2*_inline_34_arg3_+_inline_34_arg4_-_inline_34_arg7_-2*_inline_34_arg8_-_inline_34_arg9_,_inline_34_s=_inline_34_arg2_-_inline_34_arg4_+2*_inline_34_arg5_-2*_inline_34_arg6_+_inline_34_arg7_-_inline_34_arg9_;_inline_34_arg0_=Math.sqrt(_inline_34_s*_inline_34_s+_inline_34_q*_inline_34_q)}","args":[{"name":"_inline_34_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_34_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_34_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_34_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_34_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_34_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_34_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_34_q","_inline_34_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Sobel transform.
@@ -76752,6 +76752,13 @@ var create = function create() {
         this.update();
       }
     }, {
+      key: 'clear',
+      value: function clear() {
+        this.setState({
+          data: []
+        });
+      }
+    }, {
       key: 'addData',
       value: function addData(x, y) {
         this.state.data.push({ x: x, y: y });
@@ -76939,7 +76946,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n  margin-left: auto;\n  margin-right: auto;\n  \n  @media ', ' {\n    margin-left: 2em;\n    margin-right: 2em;\n  }\n  @media ', ' {\n    width: 20em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n'], ['\n  margin-left: auto;\n  margin-right: auto;\n  \n  @media ', ' {\n    margin-left: 2em;\n    margin-right: 2em;\n  }\n  @media ', ' {\n    width: 20em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n']);
+var _templateObject = _taggedTemplateLiteral(['\n  margin-left: auto;\n  margin-right: auto;\n  \n  @media ', ' {\n    margin-left: 2em;\n    margin-right: 2em;\n  }\n  @media ', ' {\n    width: 20em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n'], ['\n  margin-left: auto;\n  margin-right: auto;\n  \n  @media ', ' {\n    margin-left: 2em;\n    margin-right: 2em;\n  }\n  @media ', ' {\n    width: 20em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n  @media ', ' {\n    width: 30em;\n  }\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  width: 2em;\n'], ['\n  width: 2em;\n']);
 
 var _react = require('react');
 
@@ -76967,6 +76975,8 @@ function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defi
 
 var GradientContainer = _styledComponents2.default.div(_templateObject, _responsive.Phone, _responsive.Tablet, _responsive.Laptop, _responsive.Desktop);
 
+var NumberInput = _styledComponents2.default.input(_templateObject2);
+
 var create = function create(WorkerClient, Gradient, Graph) {
   return function (_Component) {
     _inherits(PerceptronControls, _Component);
@@ -76977,25 +76987,32 @@ var create = function create(WorkerClient, Gradient, Graph) {
       var _this = _possibleConstructorReturn(this, (PerceptronControls.__proto__ || Object.getPrototypeOf(PerceptronControls)).call(this, props));
 
       _this.state = {
+        model: 0,
         iteration: 0,
         loss: 1,
-        isTraining: false
+        isTraining: false,
+        hiddenLayer: 2,
+        hiddenUnits: 32
       };
 
       _this._worker = new WorkerClient();
       _this._worker.start();
       _this._worker.send('create', {
         inputs: 2,
-        hiddenLayer: 2,
-        hiddenUnits: 32,
+        hiddenLayer: _this.state.hiddenLayer,
+        hiddenUnits: _this.state.hiddenUnits,
         outputs: 1
       });
 
-      var size = 10;
+      var size = 20;
       _this._worker.on('trainingLoss', function (_ref) {
-        var loss = _ref.loss,
+        var model = _ref.model,
+            loss = _ref.loss,
             iteration = _ref.iteration;
 
+        if (model < _this.state.model) {
+          return;
+        }
         _this.setState({
           iteration: iteration,
           loss: loss
@@ -77005,18 +77022,39 @@ var create = function create(WorkerClient, Gradient, Graph) {
         _this.updateGradient(size);
       });
       _this._worker.on('prediction', function (_ref2) {
-        var data = _ref2.data;
+        var model = _ref2.model,
+            data = _ref2.data;
 
+        if (model < _this.state.model) {
+          return;
+        }
         var converted = data.map(function (e) {
           return e[0];
         });
         _this.refs.gradient.update(size, size, converted);
       });
       _this.updateGradient(size);
+
+      _this.handleLayersChanged = _this.handleLayersChanged.bind(_this);
+      _this.handleUnitsChanged = _this.handleUnitsChanged.bind(_this);
       return _this;
     }
 
     _createClass(PerceptronControls, [{
+      key: 'handleLayersChanged',
+      value: function handleLayersChanged(event) {
+        this.setState({
+          hiddenLayer: parseInt(event.target.value)
+        });
+      }
+    }, {
+      key: 'handleUnitsChanged',
+      value: function handleUnitsChanged(event) {
+        this.setState({
+          hiddenUnits: parseInt(event.target.value)
+        });
+      }
+    }, {
       key: 'updateGradient',
       value: function updateGradient(size) {
         var n = size,
@@ -77049,6 +77087,20 @@ var create = function create(WorkerClient, Gradient, Graph) {
         this._worker.send('stopTraining');
       }
     }, {
+      key: 'rebuild',
+      value: function rebuild() {
+        this._worker.send('create', {
+          inputs: 2,
+          hiddenLayer: this.state.hiddenLayer,
+          hiddenUnits: this.state.hiddenUnits,
+          outputs: 1
+        });
+        this.refs.graph.clear();
+        this.setState({
+          model: this.state.model + 1
+        });
+      }
+    }, {
       key: 'render',
       value: function render() {
         var _this2 = this;
@@ -77059,6 +77111,9 @@ var create = function create(WorkerClient, Gradient, Graph) {
         };
         var stopTraining = function stopTraining() {
           return _this2.stopTraining();
+        };
+        var rebuild = function rebuild() {
+          return _this2.rebuild();
         };
         var button = this.state.isTraining ? _react2.default.createElement(
           'button',
@@ -77080,10 +77135,21 @@ var create = function create(WorkerClient, Gradient, Graph) {
           button,
           _react2.default.createElement('br', null),
           _react2.default.createElement(
-            'span',
+            'label',
             null,
-            'loss: ',
-            loss
+            'Hidden Layers: ',
+            _react2.default.createElement(NumberInput, { type: 'text', name: 'layers', onChange: this.handleLayersChanged, defaultValue: 2 })
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Hidden Units: ',
+            _react2.default.createElement(NumberInput, { type: 'text', name: 'layers', onChange: this.handleUnitsChanged, defaultValue: 32 })
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: rebuild },
+            'Rebuild'
           ),
           _react2.default.createElement(
             GradientContainer,

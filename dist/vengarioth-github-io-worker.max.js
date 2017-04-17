@@ -24997,6 +24997,7 @@ var create = function create(Perceptron, generateXorData) {
 
       this._worker = worker;
       this._data = generateXorData();
+      this._model = -1;
       this._iteration = 0;
       this._worker.on('create', function (_ref) {
         var inputs = _ref.inputs,
@@ -25020,6 +25021,8 @@ var create = function create(Perceptron, generateXorData) {
     _createClass(PerceptronController, [{
       key: 'create',
       value: function create(inputs, hiddenLayer, hiddenUnits, outputs) {
+        this._iteration = 0;
+        this._model += 1;
         this._perceptron = new Perceptron(inputs, hiddenLayer, hiddenUnits, outputs);
       }
     }, {
@@ -25037,7 +25040,7 @@ var create = function create(Perceptron, generateXorData) {
           }
 
           var loss = _numjs2.default.array(losses).mean();
-          _this2._worker.send('trainingLoss', { loss: loss, iteration: _this2._iteration });
+          _this2._worker.send('trainingLoss', { model: _this2._model, loss: loss, iteration: _this2._iteration });
         }, 0);
       }
     }, {
@@ -25049,7 +25052,7 @@ var create = function create(Perceptron, generateXorData) {
       key: 'predict',
       value: function predict(data) {
         var result = this._perceptron.predict(data);
-        this._worker.send('prediction', { data: result });
+        this._worker.send('prediction', { model: this._model, data: result });
       }
     }]);
 

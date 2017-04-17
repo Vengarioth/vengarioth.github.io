@@ -14,6 +14,12 @@ const create = () => class Graph extends Component {
     this.update();
   }
 
+  clear() {
+    this.setState({
+      data: []
+    });
+  }
+
   addData(x, y) {
     this.state.data.push({x, y});
     this.update();

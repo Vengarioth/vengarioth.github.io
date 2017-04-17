@@ -4,6 +4,7 @@ const create = (Perceptron, generateXorData) => class PerceptronController {
   constructor(worker) {
     this._worker = worker;
     this._data = generateXorData();
+    this._model = -1;
     this._iteration = 0;
     this._worker.on('create', ({inputs, hiddenLayer, hiddenUnits, outputs}) => this.create(inputs, hiddenLayer, hiddenUnits, outputs));
     this._worker.on('startTraining', () => this.startTraining());
@@ -12,6 +13,8 @@ const create = (Perceptron, generateXorData) => class PerceptronController {
   }
 
   create(inputs, hiddenLayer, hiddenUnits, outputs) {
+    this._iteration = 0;
+    this._model += 1;
     this._perceptron = new Perceptron(inputs, hiddenLayer, hiddenUnits, outputs);
   }
 
@@ -29,7 +32,7 @@ const create = (Perceptron, generateXorData) => class PerceptronController {
       }
 
       const loss = nj.array(losses).mean();
-      this._worker.send('trainingLoss', { loss, iteration: this._iteration });
+      this._worker.send('trainingLoss', { model: this._model, loss, iteration: this._iteration });
     }, 0);
   }
 
@@ -39,7 +42,7 @@ const create = (Perceptron, generateXorData) => class PerceptronController {
 
   predict(data) {
     const result = this._perceptron.predict(data);
-    this._worker.send('prediction', { data: result });
+    this._worker.send('prediction', { model: this._model, data: result });
   }
 };
 

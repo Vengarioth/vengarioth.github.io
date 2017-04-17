@@ -22,28 +22,38 @@ const GradientContainer = styled.div`
   }
 `;
 
+const NumberInput = styled.input`
+  width: 2em;
+`;
+
 const create = (WorkerClient, Gradient, Graph) => class PerceptronControls extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
+      model: 0,
       iteration: 0,
       loss: 1,
-      isTraining: false
+      isTraining: false,
+      hiddenLayer: 2,
+      hiddenUnits: 32,
     };
 
     this._worker = new WorkerClient();
     this._worker.start();
     this._worker.send('create', {
       inputs: 2,
-      hiddenLayer: 2,
-      hiddenUnits: 32,
+      hiddenLayer: this.state.hiddenLayer,
+      hiddenUnits: this.state.hiddenUnits,
       outputs: 1
     });
 
-    const size = 10;
-    this._worker.on('trainingLoss', ({ loss, iteration }) => {
+    const size = 20;
+    this._worker.on('trainingLoss', ({ model, loss, iteration }) => {
+      if(model < this.state.model) {
+        return;
+      }
       this.setState({
         iteration,
         loss
@@ -52,11 +62,29 @@ const create = (WorkerClient, Gradient, Graph) => class PerceptronControls exten
 
       this.updateGradient(size);
     });
-    this._worker.on('prediction', ({ data }) => {
+    this._worker.on('prediction', ({ model, data }) => {
+      if(model < this.state.model) {
+        return;
+      }
       const converted = data.map((e) => e[0]);
       this.refs.gradient.update(size, size, converted);
     });
     this.updateGradient(size);
+
+    this.handleLayersChanged = this.handleLayersChanged.bind(this);
+    this.handleUnitsChanged = this.handleUnitsChanged.bind(this);
+  }
+
+  handleLayersChanged(event) {
+    this.setState({
+      hiddenLayer: parseInt(event.target.value)
+    });
+  }
+
+  handleUnitsChanged(event) {
+    this.setState({
+      hiddenUnits: parseInt(event.target.value)
+    });
   }
 
   updateGradient(size) {
@@ -86,10 +114,24 @@ const create = (WorkerClient, Gradient, Graph) => class PerceptronControls exten
     this._worker.send('stopTraining');
   }
 
+  rebuild() {
+    this._worker.send('create', {
+      inputs: 2,
+      hiddenLayer: this.state.hiddenLayer,
+      hiddenUnits: this.state.hiddenUnits,
+      outputs: 1
+    });
+    this.refs.graph.clear();
+    this.setState({
+      model: this.state.model + 1
+    });
+  }
+
   render() {
     const loss = this.state.loss;
     const startTraining = () => this.startTraining();
     const stopTraining = () => this.stopTraining();
+    const rebuild = () => this.rebuild();
     const button = this.state.isTraining ? (<button onClick={stopTraining}>Stop</button>) : (<button onClick={startTraining}>Start</button>);
     const f = (x, y) => {
       // return this._perceptron.predict(nj.array([x, y]));
@@ -99,7 +141,13 @@ const create = (WorkerClient, Gradient, Graph) => class PerceptronControls exten
     return (<div>
       {button}
       <br />
-      <span>loss: {loss}</span>
+      <label>
+        Hidden Layers: <NumberInput type="text" name="layers" onChange={this.handleLayersChanged} defaultValue={2}/>
+      </label>
+      <label>
+        Hidden Units: <NumberInput type="text" name="layers" onChange={this.handleUnitsChanged} defaultValue={32}/>
+      </label>
+      <button onClick={rebuild}>Rebuild</button>
       <GradientContainer>
         <Gradient ref="gradient" f={f}/>
       </GradientContainer>
